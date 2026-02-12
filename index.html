@@ -23,7 +23,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        // --- Iconos SVG Integrados corregidos con fragmentos de React ---
+        // --- Iconos SVG Integrados ---
         const Icon = ({ name, size = 20, className = "" }) => {
             const icons = {
                 dashboard: <g><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></g>,
@@ -33,13 +33,15 @@
                 settings: <g><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></g>,
                 sync: <g><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></g>,
                 alert: <g><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></g>,
-                check: <polyline points="20 6 9 17 4 12"/>,
+                check: <g><circle cx="12" cy="12" r="10"/><polyline points="16 10 11 15 8 12"/></g>,
                 clock: <g><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></g>,
                 plus: <g><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></g>,
                 chevronRight: <polyline points="9 18 15 12 9 6"/>,
                 chevronLeft: <polyline points="15 18 9 12 15 6"/>,
                 printer: <g><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></g>,
                 history: <g><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><polyline points="3 3 3 8 8 8"/><polyline points="12 7 12 12 15 15"/></g>,
+                moreVertical: <g><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></g>,
+                messageSquare: <g><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></g>,
                 external: <g><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></g>,
                 fileText: <g><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></g>,
                 fileSignature: <g><path d="M20 7h-9L9 5H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="m16 13-2 2 4 4"/></g>
@@ -51,6 +53,267 @@
             );
         };
 
+        // --- Componentes Atómicos ---
+        const StatCard = ({ label, val, icon, color }) => (
+            <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
+                <div className="flex justify-between mb-4">
+                    <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">{label}</span>
+                    <div className={`p-2 rounded-xl ${color}`}><Icon name={icon} size={18} /></div>
+                </div>
+                <div className="text-3xl font-black text-gray-800 tracking-tighter">{val}</div>
+            </div>
+        );
+
+        // --- Vistas ---
+        const Dashboard = ({ cases, meetings, onNavigate, getSLADays }) => (
+            <div className="animate-in space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <StatCard label="Total Casos" val={cases.length} icon="fileText" color="bg-blue-50 text-blue-600" />
+                    <StatCard label="Abiertos" val={cases.filter(c => c.status === 'Abierto').length} icon="alert" color="bg-orange-50 text-orange-600" />
+                    <StatCard label="Vencidos" val={cases.filter(c => c.status !== 'Cerrado' && getSLADays(c.dueDate) <= 0).length} icon="clock" color="bg-red-50 text-red-600" />
+                    <StatCard label="Cerrados" val={cases.filter(c => c.status === 'Cerrado').length} icon="check" color="bg-green-50 text-green-600" />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm text-gray-800">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="font-black text-gray-700 tracking-tighter uppercase text-sm">Sesiones Workspace</h3>
+                            <button onClick={() => onNavigate('calendar')} className="text-xs font-bold text-blue-600 hover:underline">Ver todo</button>
+                        </div>
+                        <div className="space-y-3">
+                            {meetings.slice(-3).map(m => (
+                                <div key={m.id} className="flex items-center justify-between p-3 border border-gray-50 rounded-xl hover:bg-gray-50 transition-all">
+                                    <div className="flex items-center gap-3">
+                                        <div className="bg-purple-50 text-purple-600 p-2 rounded-lg font-bold text-[10px] text-center w-10 leading-tight">
+                                            {m.date ? m.date.split('-')[2] : '?'}<br/>{m.date ? new Date(m.date).toLocaleString('es-ES', {month: 'short'}).toUpperCase() : '---'}
+                                        </div>
+                                        <div><p className="text-sm font-bold">{m.title}</p><p className="text-[10px] font-black text-gray-300 uppercase">{m.status}</p></div>
+                                    </div>
+                                    <Icon name="chevronRight" className="text-gray-300" size={14} />
+                                </div>
+                            ))}
+                            {!meetings.length && <p className="text-center py-4 text-xs text-gray-400">Sin sesiones próximas.</p>}
+                        </div>
+                    </div>
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center items-center text-center">
+                        <Icon name="sync" size={32} className="text-blue-200 mb-3" />
+                        <h3 className="font-black text-gray-700 tracking-tighter uppercase text-sm mb-2">Conectividad Cloud</h3>
+                        <p className="text-xs text-gray-400 font-medium leading-relaxed px-4">Sus datos se están guardando automáticamente en la hoja de cálculo de Google Workspace.</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const Kanban = ({ cases, onSelectCase, onMoveCase }) => (
+            <div className="flex gap-4 overflow-x-auto pb-4 animate-in custom-scrollbar">
+                {['Abierto', 'Investigación', 'Mediación', 'Cerrado'].map(status => (
+                    <div key={status} className="flex-1 min-w-[280px] max-w-[320px] bg-gray-100/50 rounded-2xl p-3 border border-gray-200/40">
+                        <div className="flex justify-between items-center mb-4 px-2">
+                            <h4 className="font-black text-[10px] uppercase text-gray-400 tracking-widest">{status}</h4>
+                            <span className="bg-gray-200 px-2 py-0.5 rounded-full text-[10px] font-black text-gray-500">{cases.filter(c => c.status === status).length}</span>
+                        </div>
+                        <div className="space-y-3 min-h-[500px]">
+                            {cases.filter(c => c.status === status).map(c => (
+                                <div key={c.id} onClick={() => onSelectCase(c)} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:border-blue-400 cursor-pointer transition-all">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">{c.id}</span>
+                                        <span className={`text-[8px] px-1.5 py-0.5 rounded font-black uppercase border bg-orange-50 text-orange-600 border-orange-100`}>{c.priority}</span>
+                                    </div>
+                                    <p className="text-sm font-bold text-gray-800 line-clamp-2">{c.title}</p>
+                                    <div className="flex items-center justify-between pt-3 mt-3 border-t border-gray-50 text-gray-400">
+                                        <div className="flex gap-1 items-center"><Icon name="messageSquare" size={12} /><span className="text-[10px] font-bold text-gray-400">{c.advances?.length || 0}</span></div>
+                                        <select 
+                                            onClick={(e) => e.stopPropagation()} 
+                                            onChange={(e) => onMoveCase(c.id, e.target.value)} 
+                                            value={c.status}
+                                            className="text-[9px] font-black bg-gray-50 border-none rounded-md px-1 outline-none"
+                                        >
+                                            {['Abierto', 'Investigación', 'Mediación', 'Cerrado'].map(o => <option key={o}>{o}</option>)}
+                                        </select>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+
+        const CaseList = ({ cases, searchTerm, onSearch, onSelectCase, getSLADays }) => (
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-in">
+                <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex items-center text-gray-800">
+                    <Icon name="cases" className="text-gray-400 mr-2" size={14} />
+                    <input type="text" placeholder="Filtrar base de datos..." className="bg-transparent border-none outline-none font-bold text-xs w-full" value={searchTerm} onChange={e => onSearch(e.target.value)} />
+                </div>
+                <table className="w-full text-left">
+                    <thead className="bg-gray-50/50 text-[10px] font-black uppercase text-gray-400 tracking-widest border-b border-gray-100">
+                        <tr><th className="px-6 py-4 text-gray-600">Radicado</th><th className="px-6 py-4 text-gray-600">Título</th><th className="px-6 py-4 text-gray-600">SLA</th><th className="px-6 py-4 text-right text-gray-600">Acción</th></tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50 text-gray-800">
+                        {cases.filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase())).map(c => (
+                            <tr key={c.id} onClick={() => onSelectCase(c)} className="hover:bg-gray-50 cursor-pointer group transition-colors">
+                                <td className="px-6 py-4 font-black text-xs text-gray-800">{c.id}</td>
+                                <td className="px-6 py-4 text-xs font-bold text-gray-700">{c.title}</td>
+                                <td className="px-6 py-4 text-[10px] font-bold text-orange-600">{getSLADays(c.dueDate)} d restantes</td>
+                                <td className="px-6 py-4 text-right"><Icon name="chevronRight" className="text-gray-300 group-hover:text-blue-600 inline transition-all" size={18} /></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+
+        const CaseDetail = ({ selectedCase, onBack, onSyncAction, isSyncing, newAdvance, onNewAdvanceChange, getSLADays }) => {
+            const [showActaForm, setShowActaForm] = React.useState(false);
+            const [actaData, setActaData] = React.useState({ type: 'Mediación', attendees: '', commitments: '' });
+            if (!selectedCase) return null;
+            return (
+                <div className="animate-in space-y-6 text-gray-800">
+                    <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-blue-600 font-black text-[10px] uppercase tracking-widest transition-colors"><Icon name="chevronLeft" size={14} /> Volver</button>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2 space-y-6">
+                            <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+                                <h3 className="text-2xl font-black text-gray-800 tracking-tighter mb-6">{selectedCase.title}</h3>
+                                <div className="grid grid-cols-2 gap-4 mb-8">
+                                    <div><p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">ID Caso</p><p className="font-bold text-sm">{selectedCase.id}</p></div>
+                                    <div><p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Vencimiento</p><p className="font-bold text-sm text-orange-600">{selectedCase.dueDate}</p></div>
+                                </div>
+                                <div className="p-4 bg-gray-50 rounded-xl border border-gray-100"><p className="text-sm font-medium text-gray-600 leading-relaxed">{selectedCase.description}</p></div>
+                            </div>
+                            <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+                                <div className="flex justify-between items-center mb-6">
+                                    <h4 className="font-black text-gray-700 tracking-widest uppercase text-xs">Expediente de Actas (Drive)</h4>
+                                    <button onClick={() => setShowActaForm(!showActaForm)} className="bg-green-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 transition-all hover:bg-green-700">
+                                        <Icon name="printer" size={14} /> {showActaForm ? 'Cerrar' : 'Generar Acta'}
+                                    </button>
+                                </div>
+                                {showActaForm ? (
+                                    <div className="space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <select className="p-2 border rounded-lg text-xs font-bold bg-white" value={actaData.type} onChange={e => setActaData({...actaData, type: e.target.value})}><option>Apertura</option><option>Mediación</option><option>Cierre</option></select>
+                                            <input type="text" placeholder="Asistentes..." className="p-2 border rounded-lg text-xs font-bold" value={actaData.attendees} onChange={e => setActaData({...actaData, attendees: e.target.value})} />
+                                        </div>
+                                        <textarea placeholder="Acuerdos legales..." className="w-full p-2 border rounded-lg text-xs font-bold h-24" value={actaData.commitments} onChange={e => setActaData({...actaData, commitments: e.target.value})} />
+                                        <button onClick={() => { onSyncAction('generateActa', actaData); setShowActaForm(false); }} className="w-full bg-blue-600 text-white py-2 rounded-xl font-black uppercase text-xs">Confirmar y Sincronizar</button>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-3">
+                                        {selectedCase.actas?.map((a, i) => (
+                                            <div key={i} className="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 group text-gray-800">
+                                                <div className="flex items-center gap-3 text-green-600"><Icon name="fileSignature" size={16} /><span className="text-xs font-bold text-gray-800">Acta de {a.type}</span></div>
+                                                <a href={a.url} target="_blank" className="text-blue-500 opacity-0 group-hover:opacity-100 transition-all"><Icon name="external" size={14} /></a>
+                                            </div>
+                                        ))}
+                                        {(!selectedCase.actas || selectedCase.actas.length === 0) && <p className="text-center py-6 text-xs text-gray-400 italic font-medium">No se han generado actas para este radicado.</p>}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col h-full text-gray-800">
+                            <h4 className="font-black text-gray-700 uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2"><Icon name="history" size={14} className="text-blue-500"/> Bitácora Cloud</h4>
+                            <div className="flex-1 space-y-5 mb-6 overflow-y-auto max-h-[400px] custom-scrollbar pr-2">
+                                {selectedCase.advances?.map((adv, i) => (
+                                    <div key={i} className="relative pl-6 pb-2 border-l-2 border-gray-100 last:border-0">
+                                        <div className="absolute left-[-9px] top-0 w-4 h-4 bg-white border-2 border-blue-500 rounded-full" />
+                                        <p className="text-[9px] font-black text-gray-300 uppercase tracking-tighter">{adv.date} • {adv.author}</p>
+                                        <p className="text-xs text-gray-600 font-semibold mt-1 leading-snug">{adv.text}</p>
+                                    </div>
+                                ))}
+                                {(!selectedCase.advances || selectedCase.advances.length === 0) && <p className="text-center py-10 text-xs text-gray-400">Sin notas de seguimiento.</p>}
+                            </div>
+                            <div className="mt-auto">
+                                <textarea className="w-full p-3 border rounded-xl text-xs font-bold bg-gray-50 h-20 resize-none mb-2 focus:bg-white outline-none transition-all text-gray-800" placeholder="Nota de seguimiento..." value={newAdvance} onChange={e => onNewAdvanceChange(e.target.value)} />
+                                <button onClick={() => onSyncAction('addAdvance', { text: newAdvance })} className="w-full bg-blue-600 text-white py-3 rounded-xl text-[10px] font-black uppercase shadow-lg shadow-blue-100 flex items-center justify-center gap-2">
+                                    {isSyncing ? <Icon name="sync" className="animate-spin" size={12}/> : 'Sincronizar Sheets'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Chronogram = ({ meetings, onAddMeeting }) => (
+            <div className="animate-in space-y-6 text-gray-800">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h2 className="text-2xl font-black text-gray-800 uppercase tracking-tighter leading-none">Cronograma</h2>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Gestión de Sesiones del Comité</p>
+                    </div>
+                    <button 
+                        onClick={onAddMeeting} 
+                        className="bg-purple-600 text-white px-6 py-2.5 rounded-xl text-xs font-black uppercase shadow-lg shadow-purple-100 hover:bg-purple-700 transition-all flex items-center gap-2"
+                    >
+                        <Icon name="calendar" size={14} /> Agendar Nueva Sesión
+                    </button>
+                </div>
+                <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                    <div className="space-y-4">
+                        {meetings.length > 0 ? meetings.map(m => (
+                            <div key={m.id} className="flex items-center justify-between p-5 border border-gray-50 rounded-2xl hover:bg-gray-50 transition-all group text-gray-800">
+                                <div className="flex items-center gap-8">
+                                    <div className="text-center w-16 border-r border-gray-100 pr-6">
+                                        <p className="font-black text-gray-800 text-2xl">{m.date ? m.date.split('-')[2] : '--'}</p>
+                                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">
+                                            {m.date ? new Date(m.date).toLocaleString('es-ES', {month: 'long'}) : 'Fecha'}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-gray-800 text-base">{m.title}</p>
+                                        <div className="flex items-center gap-3 mt-1">
+                                            <span className="text-[9px] font-black bg-blue-50 text-blue-600 px-2 py-0.5 rounded uppercase tracking-widest">{m.type}</span>
+                                            <span className="text-[9px] font-black text-gray-300 uppercase tracking-widest">{m.status}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <button className="p-2 text-gray-300 hover:text-blue-600 transition-colors"><Icon name="external" size={16}/></button>
+                                    <button className="p-2 text-gray-300 hover:text-gray-400 transition-colors"><Icon name="moreVertical" size={16}/></button>
+                                </div>
+                            </div>
+                        )) : (
+                            <div className="text-center py-20">
+                                <Icon name="calendar" size={48} className="text-gray-100 mx-auto mb-4" />
+                                <p className="text-sm font-bold text-gray-400">No hay sesiones agendadas para este mes.</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+
+        const SettingsView = ({ scriptUrl, config }) => (
+            <div className="animate-in max-w-2xl mx-auto space-y-6 text-gray-800">
+                <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm">
+                    <h3 className="text-xl font-black mb-6 text-blue-600 uppercase tracking-tighter flex items-center gap-2">
+                        <Icon name="settings" size={24} /> Configuración Cloud
+                    </h3>
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Web App URL (Apps Script)</label>
+                            <input type="text" value={scriptUrl} readOnly className="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl font-bold text-[11px] text-gray-500 outline-none" />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Google Sheet ID</p>
+                                <p className="text-[11px] font-bold truncate">{config.spreadsheetId}</p>
+                            </div>
+                            <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
+                                <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Drive Folder ID</p>
+                                <p className="text-[11px] font-bold truncate">{config.folderId}</p>
+                            </div>
+                        </div>
+                        <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                            <p className="text-[11px] text-blue-800 font-bold leading-relaxed">
+                                Esta configuración conecta la aplicación con su cuenta de Google Workspace para sincronizar expedientes en tiempo real.
+                            </p>
+                        </div>
+                        <button onClick={() => alert("Sincronización Validada")} className="w-full bg-blue-600 text-white py-3 rounded-2xl font-black uppercase text-xs tracking-widest shadow-lg hover:shadow-blue-100 transition-all">Sincronizar Ahora</button>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // --- Componente Principal App ---
         const App = () => {
             const [activeTab, setActiveTab] = React.useState('dashboard');
             const [scriptUrl, setScriptUrl] = React.useState('https://script.google.com/macros/s/AKfycbwfq5FxyIKWr-IUEcShwo0gvV9xtj1mIyk66XM0wEv8sJv2CN5YrNEs4qR0UaEhAydk/exec');
@@ -59,8 +322,11 @@
             const [newAdvance, setNewAdvance] = React.useState('');
             const [searchTerm, setSearchTerm] = React.useState('');
             const [showNewCaseModal, setShowNewCaseModal] = React.useState(false);
+            const [showNewMeetingModal, setShowNewMeetingModal] = React.useState(false);
+            const [newCaseForm, setNewCaseForm] = React.useState({ title: '', description: '' });
+            const [meetingForm, setMeetingForm] = React.useState({ title: '', date: '', type: 'Ordinaria' });
 
-            // IDs de Integración proporcionados por el usuario
+            // IDs de Integración
             const config = {
                 spreadsheetId: '1f9LQ5ck3KnWFqbUbEqK_pRnxn3QEZwU8h-151JoKW30',
                 templateDocId: '17Du6lylm_e0q9TjfkK8vQhltbyPGYtBoz_MJwznKT4M',
@@ -68,14 +334,9 @@
             };
 
             const [cases, setCases] = React.useState([
-                { id: "CCL-001", title: "Conflicto en Ventas", category: "Interpersonal", status: "Investigación", priority: "Media", date: "2024-02-01", dueDate: "2024-02-15", reporter: "Juan Pérez", description: "Trato hostil en reuniones de equipo.", advances: [{date: "2024-02-02", author: "Admin", text: "Caso radicado en Sheets."}], actas: [] },
-                { id: "CCL-002", title: "Presunto Acoso IT", category: "Acoso", status: "Abierto", priority: "Alta", date: "2024-02-10", dueDate: "2024-02-24", reporter: "Anónimo", description: "Asignación de tareas fuera de horario.", advances: [], actas: [] }
+                { id: "CCL-001", title: "Conflicto en Ventas", category: "Interpersonal", status: "Investigación", priority: "Media", date: "2024-02-01", dueDate: "2024-02-15", reporter: "Juan Pérez", description: "Trato hostil en reuniones de equipo.", advances: [{date: "2024-02-02", author: "Admin", text: "Caso radicado."}], actas: [] }
             ]);
-
-            const [meetings, setMeetings] = React.useState([
-                { id: 1, title: "Sesión Ordinaria Q1", date: "2024-03-15", status: "Programada" },
-                { id: 2, title: "Mesa de Conciliación", date: "2024-02-20", status: "Confirmada" }
-            ]);
+            const [meetings, setMeetings] = React.useState([]);
 
             const getSLADays = (dueDate) => {
                 const diff = new Date(dueDate) - new Date();
@@ -83,28 +344,52 @@
             };
 
             const handleSyncAction = async (action, payload) => {
+                if (action === 'moveCase') {
+                    setCases(prev => prev.map(c => c.id === payload.id ? { ...c, status: payload.status } : c));
+                }
+
                 setIsSyncing(true);
                 try {
-                    // Simulación de interacción con el Apps Script real
-                    await new Promise(r => setTimeout(r, 1500));
+                    const response = await fetch(scriptUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ action, payload }),
+                        headers: { 'Content-Type': 'text/plain' }
+                    });
                     
+                    if (action === 'addCase') {
+                        const newId = "CCL-" + (cases.length + 1).toString().padStart(3, '0');
+                        const newCase = {
+                            id: newId, date: new Date().toISOString().split('T')[0],
+                            dueDate: new Date(Date.now() + 12096e5).toISOString().split('T')[0],
+                            status: 'Abierto', priority: 'Media', reporter: 'Admin', advances: [], actas: [],
+                            title: payload.title, description: payload.description
+                        };
+                        setCases(prev => [...prev, newCase]);
+                        setShowNewCaseModal(false);
+                        setNewCaseForm({ title: '', description: '' });
+                    }
+                    if (action === 'addMeeting') {
+                        setMeetings(prev => [...prev, { ...payload, id: Date.now(), status: 'Programada' }]);
+                        setShowNewMeetingModal(false);
+                        setMeetingForm({ title: '', date: '', type: 'Ordinaria' });
+                    }
                     if (action === 'addAdvance') {
                         const updated = cases.map(c => c.id === selectedCase.id ? { 
-                            ...c, advances: [...c.advances, { date: new Date().toLocaleDateString(), author: "Admin CCL", text: payload.text }] 
+                            ...c, advances: [...(c.advances || []), { date: new Date().toLocaleDateString(), author: "Admin CCL", text: payload.text }] 
                         } : c);
-                        setCases(updated); setSelectedCase(updated.find(c => c.id === selectedCase.id)); setNewAdvance('');
+                        setCases(updated); 
+                        setSelectedCase(updated.find(c => c.id === selectedCase.id)); 
+                        setNewAdvance('');
                     }
                     if (action === 'generateActa') {
                         const updated = cases.map(c => c.id === selectedCase.id ? { 
-                            ...c, actas: [...c.actas, { type: payload.type, url: `https://docs.google.com/document/d/${config.templateDocId}`, date: new Date().toISOString() }] 
+                            ...c, actas: [...(c.actas || []), { type: payload.type, url: '#', date: new Date().toISOString() }] 
                         } : c);
-                        setCases(updated); setSelectedCase(updated.find(c => c.id === selectedCase.id));
-                    }
-                    if (action === 'moveCase') {
-                        setCases(cases.map(c => c.id === payload.id ? { ...c, status: payload.status } : c));
+                        setCases(updated); 
+                        setSelectedCase(updated.find(c => c.id === selectedCase.id));
                     }
                 } catch (e) {
-                    console.error("Error de sincronización:", e);
+                    console.error("Error sincronizando:", e);
                 } finally {
                     setIsSyncing(false);
                 }
@@ -113,286 +398,79 @@
             const NavItem = ({ id, icon, label }) => (
                 <button 
                     onClick={() => { setActiveTab(id); setSelectedCase(null); }} 
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === id ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'text-gray-400 hover:bg-gray-50'}`}
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === id || (id === 'cases' && activeTab === 'case-detail') ? 'bg-blue-600 text-white shadow-lg shadow-blue-100' : 'text-gray-400 hover:bg-gray-50'}`}
                 >
                     <Icon name={icon} size={18} />
                     <span>{label}</span>
                 </button>
             );
 
-            // --- Componentes Internos ---
-            const StatCard = ({ label, val, icon, color }) => (
-                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm transition-transform hover:scale-[1.02]">
-                    <div className="flex justify-between mb-4">
-                        <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest">{label}</span>
-                        <div className={`p-2 rounded-xl ${color}`}><Icon name={icon} size={18} /></div>
-                    </div>
-                    <div className="text-3xl font-black text-gray-800 tracking-tighter">{val}</div>
-                </div>
-            );
-
-            const Dashboard = () => (
-                <div className="animate-in space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <StatCard label="Total Casos" val={cases.length} icon="fileText" color="bg-blue-50 text-blue-600" />
-                        <StatCard label="Abiertos" val={cases.filter(c => c.status === 'Abierto').length} icon="alert" color="bg-orange-50 text-orange-600" />
-                        <StatCard label="Vencidos" val={cases.filter(c => c.status !== 'Cerrado' && getSLADays(c.dueDate) <= 0).length} icon="clock" color="bg-red-50 text-red-600" />
-                        <StatCard label="Cerrados" val={cases.filter(c => c.status === 'Cerrado').length} icon="check" color="bg-green-50 text-green-600" />
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <h3 className="font-black text-gray-700 mb-4 flex items-center gap-2 tracking-tighter uppercase text-sm">Sesiones Workspace</h3>
-                            <div className="space-y-3">
-                                {meetings.map(m => (
-                                    <div key={m.id} className="flex items-center justify-between p-3 border border-gray-50 rounded-xl hover:bg-gray-50 transition-all">
-                                        <div className="flex items-center gap-3">
-                                            <div className="bg-purple-50 text-purple-600 p-2 rounded-lg font-bold text-[10px] text-center w-10">
-                                                {m.date.split('-')[2]}<br/>MAR
-                                            </div>
-                                            <div><p className="text-sm font-bold">{m.title}</p><p className="text-[10px] font-black text-gray-300 uppercase">{m.status}</p></div>
-                                        </div>
-                                        <Icon name="chevronRight" className="text-gray-300" size={14} />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <h3 className="font-black text-gray-700 mb-4 tracking-tighter uppercase text-sm">Integración Cloud</h3>
-                            <div className="p-4 bg-blue-50 rounded-xl border border-blue-100 mb-4 text-xs font-bold text-blue-800 leading-relaxed">
-                                <Icon name="sync" size={16} className="mb-2" />
-                                <p>Sincronización configurada con Google Sheets y Drive para el almacenamiento seguro de expedientes.</p>
-                            </div>
-                            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">ID Sheets: {config.spreadsheetId.substring(0, 10)}...</div>
-                        </div>
-                    </div>
-                </div>
-            );
-
-            const Kanban = () => (
-                <div className="flex gap-4 overflow-x-auto pb-4 animate-in custom-scrollbar">
-                    {['Abierto', 'Investigación', 'Mediación', 'Cerrado'].map(status => (
-                        <div key={status} className="flex-1 min-w-[280px] max-w-[320px] bg-gray-100/50 rounded-2xl p-3 border border-gray-200/40">
-                            <div className="flex justify-between items-center mb-4 px-2">
-                                <h4 className="font-black text-[10px] uppercase text-gray-400 tracking-widest">{status}</h4>
-                                <span className="bg-gray-200 px-2 py-0.5 rounded-full text-[10px] font-black text-gray-500">{cases.filter(c => c.status === status).length}</span>
-                            </div>
-                            <div className="space-y-3 min-h-[450px]">
-                                {cases.filter(c => c.status === status).map(c => (
-                                    <div key={c.id} onClick={() => { setSelectedCase(c); setActiveTab('case-detail'); }} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:border-blue-400 transition-all cursor-pointer">
-                                        <div className="flex justify-between mb-2">
-                                            <span className="text-[10px] font-black text-gray-400 uppercase tracking-tighter">{c.id}</span>
-                                            <span className={`text-[8px] px-1.5 py-0.5 rounded font-black uppercase border ${c.priority === 'Alta' ? 'bg-red-50 text-red-600 border-red-100' : 'bg-orange-50 text-orange-600 border-orange-100'}`}>{c.priority}</span>
-                                        </div>
-                                        <p className="text-sm font-bold text-gray-800 line-clamp-2 mb-3">{c.title}</p>
-                                        <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-                                            <div className="flex gap-1 items-center"><Icon name="history" className="text-gray-300" size={12} /><span className="text-[10px] font-bold text-gray-400">{c.advances.length}</span></div>
-                                            <select 
-                                                onClick={(e) => e.stopPropagation()} 
-                                                onChange={(e) => handleSyncAction('moveCase', {id: c.id, status: e.target.value})} 
-                                                value={c.status}
-                                                className="text-[9px] font-black bg-gray-50 border-none rounded-md px-1 outline-none text-gray-500"
-                                            >
-                                                {['Abierto', 'Investigación', 'Mediación', 'Cerrado'].map(o => <option key={o}>{o}</option>)}
-                                            </select>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            );
-
-            const CaseDetail = () => {
-                const [showActaForm, setShowActaForm] = React.useState(false);
-                const [actaData, setActaData] = React.useState({ type: 'Mediación', attendees: '', commitments: '' });
-                if (!selectedCase) return null;
-                return (
-                    <div className="animate-in space-y-6">
-                        <button onClick={() => setActiveTab('kanban')} className="flex items-center gap-2 text-gray-400 hover:text-blue-600 font-black text-[10px] uppercase tracking-widest transition-colors"><Icon name="chevronLeft" size={14} /> Volver al flujo</button>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                            <div className="lg:col-span-2 space-y-6">
-                                <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
-                                    <div className="flex justify-between items-start mb-6">
-                                        <h3 className="text-2xl font-black text-gray-800 tracking-tighter">{selectedCase.title}</h3>
-                                        <div className={`px-2 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${getSLADays(selectedCase.dueDate) < 0 ? 'bg-red-50 text-red-600 border-red-100' : 'bg-orange-50 text-orange-600 border-orange-100'}`}>
-                                            Vence: {selectedCase.dueDate}
-                                        </div>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-4 mb-8">
-                                        <div><p className="text-[10px] font-black text-gray-400 uppercase mb-1">ID Caso</p><p className="font-bold text-sm">{selectedCase.id}</p></div>
-                                        <div><p className="text-[10px] font-black text-gray-400 uppercase mb-1">Denunciante</p><p className="font-bold text-sm">{selectedCase.reporter}</p></div>
-                                    </div>
-                                    <p className="text-sm text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-100 font-medium">{selectedCase.description}</p>
-                                </div>
-                                <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                    <div className="flex justify-between items-center mb-6">
-                                        <h4 className="font-black text-gray-700 tracking-widest uppercase text-xs flex items-center gap-2"><Icon name="fileSignature" size={16} className="text-green-600"/> Expediente de Actas (Drive)</h4>
-                                        <button onClick={() => setShowActaForm(!showActaForm)} className="bg-green-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-green-700 transition-all flex items-center gap-2">
-                                            <Icon name="printer" size={14} /> {showActaForm ? 'Cancelar' : 'Nueva Acta'}
-                                        </button>
-                                    </div>
-                                    {showActaForm ? (
-                                        <div className="space-y-4 p-4 bg-gray-50 rounded-xl border border-gray-200 animate-in">
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <select className="p-2 border rounded-lg text-xs font-bold bg-white" value={actaData.type} onChange={e => setActaData({...actaData, type: e.target.value})}><option>Apertura</option><option>Mediación</option><option>Cierre</option></select>
-                                                <input type="text" placeholder="Asistentes..." className="p-2 border rounded-lg text-xs font-bold" value={actaData.attendees} onChange={e => setActaData({...actaData, attendees: e.target.value})} />
-                                            </div>
-                                            <textarea placeholder="Compromisos legales..." className="w-full p-2 border rounded-lg text-xs font-bold h-24" value={actaData.commitments} onChange={e => setActaData({...actaData, commitments: e.target.value})} />
-                                            <button onClick={() => { handleSyncAction('generateActa', actaData); setShowActaForm(false); }} className="w-full bg-blue-600 text-white py-2 rounded-xl font-black uppercase text-xs">Generar Documento en Drive</button>
-                                        </div>
-                                    ) : (
-                                        <div className="space-y-3">
-                                            {selectedCase.actas.map((a, i) => (
-                                                <div key={i} className="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:bg-gray-50 group">
-                                                    <div className="flex items-center gap-3"><Icon name="fileText" className="text-green-600" size={16} /><span className="text-xs font-bold">Acta de {a.type}</span></div>
-                                                    <a href={a.url} target="_blank" className="text-blue-500 opacity-0 group-hover:opacity-100 transition-all"><Icon name="external" size={14} /></a>
-                                                </div>
-                                            ))}
-                                            {!selectedCase.actas.length && <p className="text-center py-6 text-xs text-gray-400 italic font-medium">No se han generado actas para este radicado.</p>}
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="flex flex-col h-full bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                <h4 className="font-black text-gray-700 uppercase tracking-widest text-[10px] mb-6 flex items-center gap-2"><Icon name="history" size={14} className="text-blue-500"/> Bitácora Cloud</h4>
-                                <div className="flex-1 space-y-5 mb-6 overflow-y-auto max-h-[450px] custom-scrollbar pr-2">
-                                    {selectedCase.advances.map((adv, i) => (
-                                        <div key={i} className="relative pl-6 pb-2 border-l-2 border-gray-100 last:border-0">
-                                            <div className="absolute left-[-9px] top-0 w-4 h-4 bg-white border-2 border-blue-500 rounded-full" />
-                                            <p className="text-[9px] font-black text-gray-300 uppercase tracking-tighter">{adv.date} • {adv.author}</p>
-                                            <p className="text-xs text-gray-600 font-semibold mt-1 leading-snug">{adv.text}</p>
-                                        </div>
-                                    ))}
-                                    {!selectedCase.advances.length && <p className="text-center py-10 text-xs text-gray-400">Sin notas de seguimiento.</p>}
-                                </div>
-                                <div className="mt-auto">
-                                    <textarea className="w-full p-3 border rounded-xl text-xs font-bold bg-gray-50 h-20 resize-none mb-2 focus:bg-white outline-none transition-all" placeholder="Registrar avance..." value={newAdvance} onChange={e => setNewAdvance(e.target.value)} />
-                                    <button onClick={() => handleSyncAction('addAdvance', { text: newAdvance })} className="w-full bg-blue-600 text-white py-3 rounded-xl text-[10px] font-black uppercase shadow-lg shadow-blue-100 flex items-center justify-center gap-2">
-                                        {isSyncing ? <Icon name="sync" className="animate-spin" size={12}/> : 'Sincronizar Sheets'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            };
-
-            const Chronogram = () => (
-                <div className="animate-in space-y-6">
-                    <div className="flex justify-between items-center">
-                        <h2 className="text-2xl font-black text-gray-800 uppercase tracking-tighter">Calendario de Sesiones</h2>
-                        <button className="bg-purple-600 text-white px-5 py-2.5 rounded-xl text-xs font-black uppercase shadow-lg hover:bg-purple-700 transition-all flex items-center gap-2">
-                            <Icon name="plus" size={14} /> Agendar Sesión
-                        </button>
-                    </div>
-                    <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
-                        <div className="p-10 text-center flex flex-col items-center justify-center min-h-[300px] bg-gray-50/50">
-                            <Icon name="calendar" size={48} className="text-gray-200 mb-4" />
-                            <p className="font-black text-gray-400 uppercase tracking-widest text-sm">Visualización de Cronograma</p>
-                            <p className="text-xs text-gray-300 mt-2">Sincronización con Google Calendar activa</p>
-                        </div>
-                    </div>
-                </div>
-            );
-
             return (
                 <div className="flex h-screen overflow-hidden text-gray-800">
-                    {/* Barra Lateral */}
                     <aside className="w-64 bg-white border-r border-gray-200 flex flex-col shrink-0">
                         <div className="p-8 flex items-center gap-3">
                             <div className="bg-blue-600 p-1.5 rounded-lg shadow-lg shadow-blue-100"><Icon name="sync" className="text-white" size={20} /></div>
-                            <div><h1 className="font-black text-xl text-gray-800 tracking-tighter leading-none">CCL SYNC</h1><span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">Enterprise v3.0</span></div>
+                            <div><h1 className="font-black text-xl text-gray-800 tracking-tighter leading-none">CCL SYNC</h1><span className="text-[10px] font-black text-blue-600 uppercase tracking-widest leading-none">Enterprise</span></div>
                         </div>
-                        <nav className="flex-1 px-6 space-y-1">
-                            <NavItem id="dashboard" icon="dashboard" label="Dashboard" />
+                        <nav className="flex-1 px-6 space-y-1 text-gray-800">
+                            <NavItem id="dashboard" icon="dashboard" label="Panel Central" />
                             <NavItem id="kanban" icon="kanban" label="Tablero Kanban" />
                             <NavItem id="cases" icon="cases" label="Expedientes" />
                             <NavItem id="calendar" icon="calendar" label="Cronograma" />
                             <div className="py-4 border-b border-gray-100 mx-2" />
-                            <NavItem id="settings" icon="settings" label="Configuración" />
+                            <NavItem id="settings" icon="settings" label="Ajustes" />
                         </nav>
-                        <div className="p-6 text-[10px] font-black text-gray-300 uppercase tracking-widest text-center border-t border-gray-50">Cloud Sincronizado</div>
+                        <div className="p-6 text-[10px] font-black text-gray-300 uppercase tracking-widest text-center border-t border-gray-50">Sincronización Cloud</div>
                     </aside>
 
-                    {/* Contenido Principal */}
                     <main className="flex-1 flex flex-col overflow-hidden">
                         <header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-10 z-10 shrink-0">
                             <h2 className="text-xl font-black text-gray-800 uppercase tracking-tighter">
-                                {activeTab === 'dashboard' ? 'Panel Central' : activeTab === 'kanban' ? 'Flujo de Trabajo' : activeTab === 'settings' ? 'Ajustes Cloud' : activeTab === 'calendar' ? 'Calendario' : 'Expedientes'}
+                                {activeTab === 'dashboard' ? 'Control Central' : activeTab === 'kanban' ? 'Flujo Kanban' : activeTab === 'cases' ? 'Base de Datos Sheets' : activeTab === 'calendar' ? 'Calendario' : activeTab === 'case-detail' ? 'Expediente Detallado' : 'Ajustes'}
                             </h2>
                             <div className="flex gap-4">
-                                {isSyncing && <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full"><Icon name="sync" className="animate-spin" size={10}/> Procesando...</div>}
+                                {isSyncing && <div className="flex items-center gap-2 text-[10px] font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full"><Icon name="sync" className="animate-spin" size={10}/> Sincronizando...</div>}
                                 <button onClick={() => setShowNewCaseModal(true)} className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-[10px] font-black shadow-lg flex items-center gap-2 uppercase active:scale-95 transition-all"><Icon name="plus" size={14} /> Nueva Denuncia</button>
                             </div>
                         </header>
 
                         <div className="flex-1 overflow-y-auto p-10">
-                            {activeTab === 'dashboard' && <Dashboard />}
-                            {activeTab === 'kanban' && <Kanban />}
-                            {activeTab === 'case-detail' && <CaseDetail />}
-                            {activeTab === 'calendar' && <Chronogram />}
-                            {activeTab === 'cases' && (
-                                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden animate-in">
-                                    <div className="p-4 border-b border-gray-100 bg-gray-50/50 flex items-center">
-                                        <Icon name="cases" className="text-gray-400 mr-2" size={14} />
-                                        <input type="text" placeholder="Filtrar base de datos..." className="bg-transparent border-none outline-none font-bold text-xs w-full" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
-                                    </div>
-                                    <table className="w-full text-left">
-                                        <thead className="bg-gray-50/50 text-[10px] font-black uppercase text-gray-400 tracking-widest border-b border-gray-100">
-                                            <tr><th className="px-6 py-4">Radicado</th><th className="px-6 py-4">Título</th><th className="px-6 py-4">SLA</th><th className="px-6 py-4 text-right">Acción</th></tr>
-                                        </thead>
-                                        <tbody className="divide-y divide-gray-50">
-                                            {cases.filter(c => c.title.toLowerCase().includes(searchTerm.toLowerCase())).map(c => (
-                                                <tr key={c.id} onClick={() => { setSelectedCase(c); setActiveTab('case-detail'); }} className="hover:bg-gray-50 cursor-pointer group transition-colors">
-                                                    <td className="px-6 py-4 font-black text-xs text-gray-800">{c.id}</td>
-                                                    <td className="px-6 py-4 text-xs font-bold text-gray-700">{c.title}</td>
-                                                    <td className="px-6 py-4 text-[10px] font-bold text-orange-600">{getSLADays(c.dueDate)} d</td>
-                                                    <td className="px-6 py-4 text-right"><Icon name="chevronRight" className="text-gray-300 group-hover:text-blue-600 inline transition-all" size={18} /></td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            )}
-                            {activeTab === 'settings' && (
-                                <div className="max-w-2xl mx-auto space-y-6">
-                                    <div className="bg-white p-8 rounded-3xl border border-gray-200 shadow-sm animate-in">
-                                        <h3 className="text-lg font-black mb-6 text-blue-600 uppercase tracking-tighter flex items-center gap-2"><Icon name="sync" size={20} /> Conexión Google Workspace</h3>
-                                        <div className="space-y-5">
-                                            <div>
-                                                <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Web App URL (Apps Script)</label>
-                                                <input type="text" value={scriptUrl} readOnly className="w-full p-4 border border-gray-100 bg-gray-50 rounded-2xl font-bold text-[11px] text-gray-500 outline-none" />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                                                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Google Sheet ID</p>
-                                                    <p className="text-[11px] font-bold truncate">{config.spreadsheetId}</p>
-                                                </div>
-                                                <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                                                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2">Plantilla Acta ID</p>
-                                                    <p className="text-[11px] font-bold truncate">{config.templateDocId}</p>
-                                                </div>
-                                            </div>
-                                            <button onClick={() => alert("Sincronización Validada")} className="w-full bg-blue-600 text-white py-3 rounded-2xl font-black uppercase text-xs tracking-widest shadow-lg hover:shadow-blue-100 transition-all">Validar Integración</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                            {activeTab === 'dashboard' && <Dashboard cases={cases} meetings={meetings} onNavigate={setActiveTab} getSLADays={getSLADays} />}
+                            {activeTab === 'kanban' && <Kanban cases={cases} onSelectCase={(c) => { setSelectedCase(c); setActiveTab('case-detail'); }} onMoveCase={(id, status) => handleSyncAction('moveCase', {id, status})} />}
+                            {activeTab === 'cases' && <CaseList cases={cases} searchTerm={searchTerm} onSearch={setSearchTerm} onSelectCase={(c) => { setSelectedCase(c); setActiveTab('case-detail'); }} getSLADays={getSLADays} />}
+                            {activeTab === 'calendar' && <Chronogram meetings={meetings} onAddMeeting={() => setShowNewMeetingModal(true)} />}
+                            {activeTab === 'case-detail' && <CaseDetail selectedCase={selectedCase} onBack={() => setActiveTab('kanban')} onSyncAction={handleSyncAction} isSyncing={isSyncing} newAdvance={newAdvance} onNewAdvanceChange={setNewAdvance} getSLADays={getSLADays} />}
+                            {activeTab === 'settings' && <SettingsView scriptUrl={scriptUrl} config={config} />}
                         </div>
                     </main>
 
-                    {/* Modal Nueva Denuncia */}
+                    {/* Modales */}
                     {showNewCaseModal && (
-                        <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in">
-                            <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl p-8">
-                                <h3 className="text-xl font-black mb-6 uppercase tracking-tighter flex items-center gap-2"><Icon name="plus" className="text-blue-600" size={20}/> Radicar en Workspace</h3>
+                        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-[100] p-4 animate-in">
+                            <div className="bg-white rounded-3xl w-full max-w-lg shadow-2xl p-8 text-gray-800">
+                                <h3 className="text-xl font-black mb-6 uppercase tracking-tighter text-blue-600">Nueva Denuncia</h3>
                                 <div className="space-y-4">
-                                    <div><label className="block text-[10px] font-black text-gray-400 mb-1 uppercase tracking-widest">Título del incidente</label><input type="text" className="w-full p-3 border border-gray-200 rounded-xl font-bold text-xs" placeholder="Ej: Trato hostil en ventas" /></div>
-                                    <div><label className="block text-[10px] font-black text-gray-400 mb-1 uppercase tracking-widest">Descripción de hechos</label><textarea className="w-full p-3 border border-gray-200 rounded-xl h-24 font-bold text-xs resize-none" placeholder="Relate lo ocurrido..." /></div>
-                                    <div className="flex gap-4 pt-4">
-                                        <button onClick={() => setShowNewCaseModal(false)} className="flex-1 py-3 text-gray-400 font-black uppercase text-[10px] tracking-widest transition-colors">Cancelar</button>
-                                        <button onClick={() => { setShowNewCaseModal(false); handleSyncAction('addCase', {}); }} className="flex-1 py-3 bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-lg transition-all active:scale-95">Guardar en Sheets</button>
+                                    <input type="text" placeholder="Título..." className="w-full p-3 border rounded-xl font-bold text-xs bg-white text-gray-800" value={newCaseForm.title} onChange={e => setNewCaseForm({...newCaseForm, title: e.target.value})} />
+                                    <textarea placeholder="Descripción..." className="w-full p-3 border rounded-xl h-24 font-bold text-xs resize-none bg-white text-gray-800" value={newCaseForm.description} onChange={e => setNewCaseForm({...newCaseForm, description: e.target.value})} />
+                                    <div className="flex gap-4">
+                                        <button onClick={() => setShowNewCaseModal(false)} className="flex-1 py-3 text-gray-400 font-black uppercase text-[10px]">Cancelar</button>
+                                        <button onClick={() => handleSyncAction('addCase', newCaseForm)} className="flex-1 py-3 bg-blue-600 text-white rounded-2xl font-black uppercase text-[10px] shadow-lg">Enviar a Sheets</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {showNewMeetingModal && (
+                        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-[100] p-4 animate-in">
+                            <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl p-8 text-gray-800">
+                                <h3 className="text-xl font-black mb-6 uppercase text-purple-600">Agendar Sesión</h3>
+                                <div className="space-y-4">
+                                    <input type="text" placeholder="Título de la reunión..." className="w-full p-3 border rounded-xl font-bold text-xs bg-gray-50 outline-none text-gray-800" value={meetingForm.title} onChange={e => setMeetingForm({...meetingForm, title: e.target.value})} />
+                                    <input type="date" className="w-full p-3 border rounded-xl font-bold text-xs bg-gray-50 outline-none text-gray-800" value={meetingForm.date} onChange={e => setMeetingForm({...meetingForm, date: e.target.value})} />
+                                    <div className="flex gap-4">
+                                        <button onClick={() => setShowNewMeetingModal(false)} className="flex-1 py-3 text-gray-400 font-black uppercase text-[10px]">Cancelar</button>
+                                        <button onClick={() => handleSyncAction('addMeeting', meetingForm)} className="flex-1 py-3 bg-purple-600 text-white rounded-2xl font-black uppercase text-[10px] shadow-lg">Programar</button>
                                     </div>
                                 </div>
                             </div>
